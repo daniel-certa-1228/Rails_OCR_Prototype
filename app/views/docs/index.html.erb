@@ -1,0 +1,13 @@
+<h1>Home</h1>
+
+<% @docs.each do |doc| %>
+
+    <h5><%= doc[:description]%></h5>
+    <%= doc[:date]%>
+    <%= image_tag doc.avatar.url(:med) %>
+    <%= link_to 'Delete Document', doc_path(doc), method: :delete, data: {confirm: 'Are you sure you want to delete this document?'} %>
+    
+<% end %>
+<br>
+
+<%= link_to 'Add New Doc', new_doc_path %>

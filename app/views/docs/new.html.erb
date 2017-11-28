@@ -1,0 +1,29 @@
+<h1>Document Prototype</h1>
+
+<%= form_with scope: :doc, url: docs_path, local: true, html: { multipart: true } do |form| %>
+      
+
+        <p>
+          <%= form.label :description %><br>
+          <%= form.text_field :description, class: "form-control"  %>
+        </p>
+
+        <p>
+          <%= form.label :date %><br>
+          <%= form.date_field :date, class: "form-control"  %>
+        </p>
+
+        <p>
+          <%= form.label "Upload Image" %><br>
+          <%= form.file_field :avatar %>
+        </p>
+
+        <p>
+            <%= form.hidden_field :content %>
+        </p>
+        <p>
+          <%=  form.submit "Save", class: "btn btn-success" %>
+        </p>
+      <% end %>
+
+      <%= link_to 'Home', root_path %>

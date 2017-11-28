@@ -1,0 +1,7 @@
+{
+  "name": "tess_proto",
+  "private": true,
+  "dependencies": {
+    "imagemagick": "^0.1.3"
+  }
+}
