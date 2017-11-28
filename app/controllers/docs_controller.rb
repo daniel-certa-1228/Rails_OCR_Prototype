@@ -1,4 +1,6 @@
 require 'ocr_space'
+# require 'rmagick'
+require "mini_magick"
 
 class DocsController < ApplicationController
 
@@ -8,7 +10,7 @@ class DocsController < ApplicationController
 
     def create
         @doc = Doc.new(doc_params)
-        convert
+        to_text
         if @doc.save
             redirect_to docs_path
         else
@@ -36,9 +38,17 @@ class DocsController < ApplicationController
         params.require(:doc).permit(:description, :date, :content, :avatar )
     end
 
-    def convert
+    def to_text
+        image = MiniMagick::Image.new(params[:doc][:avatar].path)
+        image = image.resize "1200x1800"
+        
         resource = OcrSpace::Resource.new(apikey: "0cf421d36788957")
-        content = resource.clean_convert file: params[:doc][:avatar].path
-        @doc.content = content
+        @doc.content = resource.clean_convert file: image.path
     end
+
+    # def convert(jpg)
+    #     image = MiniMagick::Image.new(jpg)
+    #     image.resize "480x640"
+    #     image.format "png"
+    # end
 end
