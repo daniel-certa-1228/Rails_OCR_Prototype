@@ -1,12 +1,10 @@
 class Doc < ApplicationRecord
-    has_attached_file :avatar, styles: { small: "50x75", med: "100x150", large: "200x300" }
+    has_attached_file :avatar, styles: { small: "100x150", med: "300x450", large: "900x1200" }
     validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
-    # before_save :convert
-    
-    # private
-    # def convert
-    #     resource = OcrSpace::Resource.new(apikey: "0cf421d36788957")
-    #     content = resource.clean_convert file: 
-    #     @doc.content = content
-    # end
+
+    def self.fuzzy_content_search(search_string)
+        search_string = "%" + search_string + "%"
+        self.where("content LIKE ?", search_string)
+    end
+
 end

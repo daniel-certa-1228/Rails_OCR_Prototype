@@ -1,5 +1,4 @@
 require 'ocr_space'
-# require 'rmagick'
 require "mini_magick"
 
 class DocsController < ApplicationController
@@ -27,10 +26,22 @@ class DocsController < ApplicationController
         end
     end
 
+    def show
+        @doc = Doc.find(params[:id])
+    end
+
     def destroy
         @doc = Doc.find(params[:id])
         @doc.destroy
         redirect_to root_path
+    end
+
+    def search
+        @search = params[:search_string]
+
+        @docs = Doc.fuzzy_content_search(@search)
+
+        render 'search'
     end
 
     private
@@ -41,14 +52,7 @@ class DocsController < ApplicationController
     def to_text
         image = MiniMagick::Image.new(params[:doc][:avatar].path)
         image = image.resize "1200x1800"
-        
         resource = OcrSpace::Resource.new(apikey: "0cf421d36788957")
         @doc.content = resource.clean_convert file: image.path
     end
-
-    # def convert(jpg)
-    #     image = MiniMagick::Image.new(jpg)
-    #     image.resize "480x640"
-    #     image.format "png"
-    # end
 end
