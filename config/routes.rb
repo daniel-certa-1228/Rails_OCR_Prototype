@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :docs
+  resources :docs do
+    collection do
+      get :search
+    end
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'docs#index'
+  get 'docs/search', to: 'docs#search', as: 'search'
 end
