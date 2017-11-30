@@ -28,6 +28,7 @@ class DocsController < ApplicationController
 
     def show
         @doc = Doc.find(params[:id])
+        DocMailer.doc_mail('daniel.certa.1228@gmail.com').deliver_now
     end
 
     def destroy
@@ -38,11 +39,13 @@ class DocsController < ApplicationController
 
     def search
         @search = params[:search_string]
-
         @docs = Doc.fuzzy_content_search(@search)
-
         render 'search'
     end
+
+    # def mail
+        
+    # end
 
     private
     def doc_params
