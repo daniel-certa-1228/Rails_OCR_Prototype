@@ -28,7 +28,6 @@ class DocsController < ApplicationController
 
     def show
         @doc = Doc.find(params[:id])
-        # DocMailer.doc_mail('daniel.certa.1228@gmail.com').deliver_now
     end
 
     def destroy
@@ -46,6 +45,11 @@ class DocsController < ApplicationController
     def send_pdf
         @doc = Doc.find(params[:id])
     end
+
+    # def mail_it
+    #     @email = params[:email]
+    #     DocMailer.doc_mail(@email).deliver_now
+    # end
 
     private
     def doc_params
