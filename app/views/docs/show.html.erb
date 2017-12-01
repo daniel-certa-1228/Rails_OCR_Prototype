@@ -3,5 +3,6 @@
         <%= @doc[:date]%><br>
         <%= image_tag @doc.avatar.url(:original) %><br>
         <%= link_to 'Delete Document', doc_path(@doc), method: :delete, data: {confirm: 'Are you sure you want to delete this document?'} %>
+        <%= link_to 'Email PDF', send_path(@doc) %>
         <hr>
     </card>
