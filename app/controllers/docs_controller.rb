@@ -38,11 +38,18 @@ class DocsController < ApplicationController
 
     def search
         @search = params[:search_string]
-
         @docs = Doc.fuzzy_content_search(@search)
-
         render 'search'
     end
+
+    def send_pdf
+        @doc = Doc.find(params[:id])
+    end
+
+    # def mail_it
+    #     @email = params[:email]
+    #     DocMailer.doc_mail(@email).deliver_now
+    # end
 
     private
     def doc_params

@@ -1,0 +1,15 @@
+<h1>Send a fucking PDF</h1>
+
+<%= form_with scope: :doc, url: docs_path, local: true, html: { multipart: true } do |form| %>
+      
+        <%= image_tag @doc.avatar.url(:med) %><br>
+
+        <p>
+          <%= form.label :email %><br>
+          <%= form.text_field :email, class: "form-control"  %>
+        </p>
+
+          <%=  form.submit "Send", class: "btn btn-success" %>
+        </p>
+
+      <% end %>
