@@ -1,5 +1,9 @@
 require 'ocr_space'
+require 'rmagick'
 require "mini_magick"
+# require 'aws-sdk'
+# require 'open-uri'
+require 'stringio'
 
 class DocsController < ApplicationController
 
@@ -44,18 +48,27 @@ class DocsController < ApplicationController
 
     def send_pdf
         @doc = Doc.find(params[:id])
-        puts @doc.avatar.url(:original)
-        puts @doc.description
-        puts @doc.date
-        puts @doc.content
+
+        s3 = Aws::S3::Client.new(
+            region: ENV.fetch('AWS_REGION'),
+            access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
+            secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY')
+          )
+
+        @jpeg = s3.get_object(bucket: ENV.fetch('S3_BUCKET_NAME'), key: "docs/#{@doc.id}.original.JPG")
+        @new_pdf = Magick::Image.from_blob(@jpeg.body.read)[0]
+        @new_pdf.write("#{@doc.description}.pdf")
+        
     end
 
     def mail_it
         @email = params[:doc][:email]
         @description = params[:doc][:description]
         @content = params[:doc][:content]
-        DocMailer.doc_mail(@email, @description, @content).deliver_later
+        @attachment = params[:doc][:description]
+        DocMailer.doc_mail(@email, @description, @content, @attachment).deliver_later
         redirect_to docs_path
+        File.delete("#{@attachment}.pdf")
     end
 
     private
