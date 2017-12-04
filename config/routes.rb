@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   root 'docs#index'
   get 'docs/search', to: 'docs#search', as: 'search'
   get 'docs/send_pdf/:id', to: 'docs#send_pdf', as: 'send'
+  post '/docs/send_pdf/mail_it', to: 'docs#mail_it', as: 'mail'
 end

@@ -46,10 +46,12 @@ class DocsController < ApplicationController
         @doc = Doc.find(params[:id])
     end
 
-    # def mail_it
-    #     @email = params[:email]
-    #     DocMailer.doc_mail(@email).deliver_now
-    # end
+    def mail_it
+        @email = params[:doc][:email]
+        # puts @email
+        DocMailer.doc_mail(@email).deliver_later
+        redirect_to docs_path
+    end
 
     private
     def doc_params
