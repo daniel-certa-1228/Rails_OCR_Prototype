@@ -11,6 +11,25 @@ Rails.application.configure do
       s3_region: ENV.fetch('AWS_REGION'),
     }
   }
+
+  config.action_mailer.delivery_method = :sendmail
+  # Defaults to:
+  # config.action_mailer.sendmail_settings = {
+  #   location: '/usr/sbin/sendmail',
+  #   arguments: '-i'
+  # }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = {from: 'kidstuffapp@gmail.com'}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  address:              'smtp.gmail.com',
+  port:                 587,
+  domain:               'dancerta.tech',
+  user_name:            'kidstuffapp@gmail.com',
+  password:             'kidstuff6969',
+  authentication:       'plain',
+  enable_starttls_auto: true  }
   # Code is not reloaded between requests.
   config.cache_classes = true
 
