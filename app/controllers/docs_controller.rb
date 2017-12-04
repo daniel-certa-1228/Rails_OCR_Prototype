@@ -44,12 +44,17 @@ class DocsController < ApplicationController
 
     def send_pdf
         @doc = Doc.find(params[:id])
+        puts @doc.avatar.url(:original)
+        puts @doc.description
+        puts @doc.date
+        puts @doc.content
     end
 
     def mail_it
         @email = params[:doc][:email]
-        # puts @email
-        DocMailer.doc_mail(@email).deliver_later
+        @description = params[:doc][:description]
+        @content = params[:doc][:content]
+        DocMailer.doc_mail(@email, @description, @content).deliver_later
         redirect_to docs_path
     end
 
