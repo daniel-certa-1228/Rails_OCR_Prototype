@@ -8,8 +8,11 @@
           <%= form.label :email %><br>
           <%= form.text_field :email, class: "form-control"  %>
         </p>
+          <%= form.hidden_field :description, :value => @doc.description %>
+         
+          <%= form.hidden_field :content, :value => @doc.content %>
 
           <%=  form.submit "Send", class: "btn btn-success" %>
-        </p>
+        
 
       <% end %>
