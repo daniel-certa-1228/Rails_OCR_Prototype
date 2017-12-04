@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'paperclip'
 # gem 'rtesseract', '~> 2.1'
-# gem 'rmagick', '~> 2.15', '>= 2.15.4'
+gem 'rmagick', '~> 2.15', '>= 2.15.4'
 gem "mini_magick"
 gem 'ocr_space'
 group :development, :test do
