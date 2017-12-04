@@ -1,9 +1,6 @@
 require 'ocr_space'
 require 'rmagick'
 require "mini_magick"
-# require 'aws-sdk'
-# require 'open-uri'
-require 'stringio'
 
 class DocsController < ApplicationController
 
